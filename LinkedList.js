@@ -11,27 +11,40 @@ class LinkedList {
         this.tail = null;
     }
 
-    delete(value){ //удаляет все элементы, равные value
+    delete(value){ //удаляет все элементы, равные value. Возвращает удалённое
         // плюс во время удаления переназначать текущему элементу next как тот, на что ссылается удаляемый
 
         if(!this.head){ // список пуст - нечего искать
             return null;
         }
+        let removableElem = null;
+
         while(this.head && this.head.value === value){ //если искомые идут сразу с начала подряд
+            removableElem = this.head;
             this.head = this.head.next;
         }
 
         let thisEl = this.head; // т.к. голова явно уже не подходит, то стартуем с неё
 
-        while(thisEl){
-            if(thisEl.next.value === value){ // если у следующего звена нужное value, то возможны 2 варианта?
-                if(thisEl.next === this.tail){ // - либо это след.звено - хвост, и тогда просто назначим новый хвост
-                    this.tail = thisEl;
-                } else thisEl = thisEl.next.next; // ... либо перескакиваем дальше
+        while(thisEl){ // пока существует текущий элемент
+            if(!thisEl.next){ // след элемент - не существует. Искать нечего
+                return removableElem; // вместо НУЛЛА - см строку 23
+            } else {
+                // 1) следующий элемент - существует
+                if(thisEl.next.value === value){ // 1а)-его значение подходит
+                    removableElem = thisEl.next;
+
+                    if(thisEl.next === this.tail){ // если след элемент - хвост, то
+                        this.tail = thisEl; //... то назначаем хвост данным элементом
+                    } else {
+                        thisEl.next = thisEl.next.next;
+                    }
+                } else { // 1б)-следующий элемент - существует, но его значение не подходит
+                    thisEl = thisEl.next;
+                }
             }
-            else thisEl = thisEl.next; // если с value у следующего не угадали, то просто шажок вперёд
         }
-        return this;
+        return removableElem;
     }
 
     find(value){ //– находит первый элемент, равный value
@@ -85,21 +98,26 @@ class LinkedList {
 
 const linkedList = new LinkedList();
 
-console.log(linkedList.head); // null
-console.log(linkedList.tail); // null
+console.log(linkedList.delete(5)); // null ?
 
-linkedList.append(1).append(2);
+linkedList.append(1)
+    .append(1)
+    .append(1)
+    .append(3)
+    .append(4);
 
-console.log(linkedList.tail.value); // 2
-console.log(linkedList.head.value); // 1
+const deletedNode = linkedList.delete(1);
+console.log(deletedNode.value); // 1
 
-linkedList.prepend(10);
-console.log(linkedList.head.value); // 10
+// console.log(linkedList.delete(1)); //null
+// console.log(linkedList.head.value); //3 ?
+//
+// linkedList.delete(4);
+// linkedList.delete(4);
+//
+// console.log(linkedList.tail.next); //null
 
-console.log(linkedList)
 
-linkedList.delete(2);
-console.log(linkedList.tail.value); // 1
 
 /*
 let newLL = new LinkedList();
