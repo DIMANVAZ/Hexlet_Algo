@@ -11,6 +11,18 @@ class LinkedList {
         this.tail = null;
     }
 
+    show(){ //выдать весь список в виде массива
+        this.all = [];
+        if(this.head){
+            let nextEl = this.head;
+            while(nextEl){
+                this.all.push(nextEl.value);
+                nextEl = nextEl.next;
+            }
+        }
+        return this.all;
+    }
+
     delete(value){ //удаляет все элементы, равные value. Возвращает удалённое
         // плюс во время удаления переназначать текущему элементу next как тот, на что ссылается удаляемый
 
@@ -96,38 +108,22 @@ class LinkedList {
     }
 }
 
-const linkedList = new LinkedList();
 
-console.log(linkedList.delete(5)); // null ?
+let sill = new LinkedList();
+sill.prepend(3).prepend(1).append(9);
+console.log('head:',sill.head);
+console.log('tail:',sill.tail);
+console.log(sill.find(6));
+console.log(sill.find(9));
+console.log(sill.find(5));
+console.log(sill);
+console.log(sill.delete(3));
+console.log(sill.prepend(4).prepend(4).prepend(4));
+console.log(sill.delete(3));
+console.log(sill.show());
 
-linkedList.append(1)
-    .append(1)
-    .append(1)
-    .append(3)
-    .append(4);
-
-const deletedNode = linkedList.delete(1);
-console.log(deletedNode.value); // 1
-
-// console.log(linkedList.delete(1)); //null
-// console.log(linkedList.head.value); //3 ?
-//
-// linkedList.delete(4);
-// linkedList.delete(4);
-//
-// console.log(linkedList.tail.next); //null
-
-
-
-/*
-let newLL = new LinkedList();
-newLL.prepend(3).prepend(1).append(9);
-console.log('head:',newLL.head);
-console.log('tail:',newLL.tail);
-console.log(newLL.find(6));
-console.log(newLL.find(9));
-console.log(newLL.find(5));
-console.log(newLL);
-console.log(newLL.delete(3));
-console.log(newLL.prepend(4).prepend(4).prepend(4));;
-console.log(newLL.delete(4));*/
+let sill2 = new LinkedList();
+for (let i = 0; i < 10; i++) {
+    sill2.prepend(i);
+}
+console.log(sill2.show());

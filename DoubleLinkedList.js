@@ -6,52 +6,86 @@ class DoubleLinkedListNode {
     }
 }
 
-class DoubleLinkedList {
+export default class DoubleLinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
     }
 
+    show(){ //выдать весь список в виде массива
+        this.all = [];
+        if(this.head){
+            let nextEl = this.head;
+            while(nextEl){
+                this.all.push(nextEl.value);
+                nextEl = nextEl.next;
+            }
+        }
+        return this.all;
+    }
+
     delete(value){ //удаляет все элементы, равные value. Возвращает удалённое
-        // плюс во время удаления переназначать текущему элементу next как тот, на что ссылается удаляемый
 
-        if(!this.head){ // список пуст - нечего искать
-            return null;
-        }
-        let removableElem = null;
-        // прикол в движении в обе стороны - в next и в previous
-        if(!this.head.next && this.head.value !== value){
-            // просто не меняем нулл
-        }
+        let nextEl = this.head;   // стартовая позиция (проверяемый элемент nextEl) - голова. Пойдём вправо
+        let removableElem = null; // поначалу присвоим удаляемому null - а вдруг его не будет
 
+        while(nextEl){
+            if(this.head && this.head.value === value){ // проверяем голову. Если искомое значение есть в голове, то...
+                removableElem = this.head; // сохраняем "голову" в удаляемое
+                this.head = this.head.next; // перезаписываем голову
+                nextEl = this.head; // непременный шаг вперёд (помним про слабость - условие выхода из цикла)
+
+            } else if (this.tail && this.tail.value === value){ // проверяем хвост. Если искомое значение есть в хвосте, то...
+                removableElem = this.tail; // сохраняем "хвост" в удаляемое
+                this.tail = this.tail.previous; // перезаписываем хвост
+                nextEl = nextEl.next; // т.к. в голове не было, то всё равно шаг вперёд
+
+            } else { // если ничего не было ни в голове, ни в хвосте, исследуем проверяемый элемент nextEl
+
+                if(nextEl.value === value){ //1. Если проверяемый совпал
+                    removableElem = nextEl;
+
+                    let rightMate = nextEl?.next; // это мы сохранили "потомка" nextEl-a
+                    let leftMate = nextEl?.previous; // это мы сохранили "предка" nextEl-a
+
+                    leftMate ? leftMate.next = rightMate: false; // если "предок" существует - пишем ему в потомки правого товарища nextEl-a
+                    rightMate ? rightMate.previous = leftMate: false; // если "потомок" существует - пишем ему в предки левого товарища nextEl-a
+
+                    nextEl = nextEl.next; // непременный шаг вперёд (помним про слабость - условие выхода из цикла)
+                }
+
+                else { //2. Если проверяемый НЕ совпал
+                    nextEl = nextEl.next; // всё равно шаг вперёд
+                }
+            }
+        }
         return removableElem;
     }
 
     find(value){ //– находит первый элемент, равный value
         // перебрать весь список, найти первый
         let found = null;
+        if(!this.head){
+            return found;
+        }
 
-        if(this.head.value === value){
+        if(this.head && this.head.value === value){
             found = this.head;
         }
-        if(this.tail.value === value){
+        if(this.tail && this.tail.value === value){
             found = this.tail;
         }
 
         let nextEl = this.head.next;
-        let prevEl = this.tail.previous;
-        while(nextEl.next || prevEl.previous){
+
+        while(nextEl){
             if(nextEl.value === value){
                 found = nextEl;
                 break;
             }
-            else if(prevEl.value === value){
-                found = prevEl;
-                break;
-            }
+
             else {
                 nextEl = nextEl.next;
-                prevEl = prevEl.previous;
             }
         }
 
@@ -88,6 +122,20 @@ class DoubleLinkedList {
 }
 
 const doll = new DoubleLinkedList();
-doll.append(7).append(8).append(12).prepend(6).append(15);
+for (let i = 1; i <= 10; i++) {
+    doll.append(i);
+}
+/*console.log('tail = ', doll.tail.value);
+doll.delete(10);
+console.log(doll.delete(11));;
+console.log('tail = ', doll.tail.value);
+console.log('head = ', doll.head.value);
+doll.delete(1);
+console.log('head = ', doll.head.value);
+console.log(doll.show());
+doll.delete(7);*/
+console.log(doll.show());
+console.log(doll.find(5));
+console.log(doll.find(10));
+console.log(doll.find(11));
 
-console.log(doll.find(7));

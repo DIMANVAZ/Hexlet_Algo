@@ -1,5 +1,5 @@
 // быстрая сортировка (по возрастанию)
-function quickSort(items){
+export default function quickSort(items){
     if(items.length <= 1){
         console.log(`items <=1 : ${items}`)
         return items;
