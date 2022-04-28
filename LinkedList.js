@@ -5,7 +5,7 @@ class LinkedListNode {
     }
 }
 
-class LinkedList {
+export default class LinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
@@ -111,19 +111,19 @@ class LinkedList {
 
 let sill = new LinkedList();
 sill.prepend(3).prepend(1).append(9);
-console.log('head:',sill.head);
-console.log('tail:',sill.tail);
-console.log(sill.find(6));
-console.log(sill.find(9));
-console.log(sill.find(5));
-console.log(sill);
-console.log(sill.delete(3));
-console.log(sill.prepend(4).prepend(4).prepend(4));
-console.log(sill.delete(3));
-console.log(sill.show());
+// console.log('head:',sill.head);
+// console.log('tail:',sill.tail);
+// console.log(sill.find(6));
+// console.log(sill.find(9));
+// console.log(sill.find(5));
+// console.log(sill);
+// console.log(sill.delete(3));
+// console.log(sill.prepend(4).prepend(4).prepend(4));
+// console.log(sill.delete(3));
+// console.log(sill.show());
 
 let sill2 = new LinkedList();
 for (let i = 0; i < 10; i++) {
     sill2.prepend(i);
 }
-console.log(sill2.show());
+// console.log(sill2.show());
