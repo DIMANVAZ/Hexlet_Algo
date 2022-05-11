@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@hexlet/immutable-fs-trees": "^0.7.1",
-    "jest": "^28.0.2"
+    "jest": "^28.0.2",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.17.9"

@@ -1,4 +1,6 @@
 // описание https://github.com/hexlet-components/js-immutable-fs-trees
+// подробное описание https://github.com/hexlet-components/js-immutable-fs-trees/tree/main/docs
+
 
 import {
     mkfile, mkdir, isDirectory, isFile, map,
