@@ -1,15 +1,14 @@
-/*
-Реализуйте и экспортируйте по умолчанию функцию, которая умеет частично применять один (второй) аргумент
-у переданной функции c двумя аргументами:
-*/
+/* Реализуйте и экспортируйте по умолчанию функцию, которая умеет частично
+применять один (второй) аргумент у переданной функции c двумя аргументами: */
+
 //--------мои варианты----------------------
-function partialApply(fn,arg){
-    return (arg2) => fn(arg2,arg);
+function partialApply(fn,second){
+    return (first) => fn(first,second);
 }
 
-function partialApply2(fn,arg){
-    return function pA(arg2){
-        return fn(arg2,arg);
+function partialApply2(fn,arg2){
+    return function (arg1){
+        return fn(arg1,arg2);
     }
 }
 //---------вариант учителя-------------------
@@ -20,6 +19,7 @@ const f1 = partialApply(pow, 2);
 console.log(f1(1)); // 1
 console.log(f1(10)); // 100
 
-const f2 = partialApply((a, b) => a * b, 5);
+const f2 = partialApply2((a, b) => a * b, 5);
 console.log(f2(2)); // 10
 console.log(f2(5)); // 25
+
