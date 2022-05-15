@@ -12,20 +12,25 @@ flip() вернет нам новую функцию, у которой перв
 Реализуйте и экспортируйте по умолчанию функцию, которая работает с функциями принимающими только два аргумента.
 */
 
-// варианты от парней с Вью-чата
-//--------------1--------------------
-export default function flip(anyFunc){
+//---------вариант-1-------------------------------------
+function flip(anyFunc){
     return (first, second) => anyFunc(second, first);
 }
-//--------------2--------------------
-const flip_2 = fn => (...args) => fn(...args.reverse());
 
 // subtraction
 const sub = (a, b) => a - b;
 const reverseSub = flip(sub);
 
 console.log(sub(5, 3)); // 2
+
 console.log(reverseSub(5, 3)); // -2
+console.log(flip(sub)(5, 3)); // -2
+
+//---------вариант-2-------------------------------------
+const flip_2 = fn => (...args) => fn(...args.reverse());
+
+//---------вариант-3-------------------------------------
+export default (f) => (a, b) => f(b, a);
 
 
 // exponentiation
