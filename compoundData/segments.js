@@ -1,9 +1,7 @@
 /*
-Рассмотрим задачу представления отрезков на прямой плоскости. Каждый отрезок представляется как пара точек: начало и конец. Он может быть описан, например, так: [(1, 3), (5, 4)]. Это означает, что наш отрезок начинается в точке (1, 3) и заканчивается в точке (5, 4) координатной плоскости.
-
-В этом задании необходимо разработать абстракцию для работы с отрезками (англ. segment), которая позволяет строить их из точек, извлекать из отрезков составные части (начало или конец отрезка), а также получать текстовое представление отрезка.
-
-Абстракция заключается в том, что конкретное представление отрезка определяется внутри функций, описывающих работу с отрезками и зависит от создателя библиотеки. С точки зрения клиента библиотеки (кода который ее вызывает), не важно как конкретно устроен отрезок, важно только то, что есть некоторый набор функций (абстракция), позволяющий работать с ним.
+Рассмотрим задачу представления отрезков на прямой плоскости. Каждый отрезок представляется как пара точек: начало и конец.
+Он может быть описан, например, так: [(1, 3), (5, 4)].
+Это означает, что наш отрезок начинается в точке (1, 3) и заканчивается в точке (5, 4) координатной плоскости.
 
 Определите и экспортируйте следующие функции:
 
@@ -14,25 +12,34 @@
 */
 
 import { makePoint, getX, getY, toString as pointToString } from '@hexlet/points';
+import {car, cdr, cons} from "@hexlet/pairs";
 
-function makeSegment(point1, point2) {
-    return [point1,point2];
+export function makeSegment(point1, point2) {
+    //return [point1,point2];
+    return cons(point1, point2)
 }
 
-function startSegment(){
-
+export function startSegment(segment){
+    // return segment[0];
+    return car(segment)
 }
 
-function endSegment(){
-
+export function endSegment(segment){
+    // return segment[1];
+    return cdr(segment)
 }
 
-function midpointSegment(){
-
+export function midpointSegment(segment){
+    const x1 = getX(car(segment)); // getX(segment[0])
+    const y1 = getY(car(segment)); // getY(segment[0]);
+    const x2 = getX(cdr(segment)); // getX(segment[1])
+    const y2 = getY(cdr(segment)); // getY(segment[1]);
+    return makePoint((x1 + x2) / 2, (y1 + y2) / 2)
 }
 
-function segmentToString(segment){
-    return [pointToString(segment[0]),pointToString(segment[1])]
+export function segmentToString(segment){
+    return `[${pointToString(car(segment))}, ${pointToString(cdr(segment))}]`
+
 }
 
 // не важно, чем является segment с точки зрения реализации, главное, что с ним можно
@@ -46,6 +53,6 @@ console.log(pointToString(point1)); // (1, 2)
 const point2 = endSegment(segment);
 console.log(pointToString(point2)); // (-4, -2)
 
-pointToString(startSegment(segment)) === pointToString(makePoint(1, 2)); // true
+console.log(pointToString(startSegment(segment)) === pointToString(makePoint(1, 2))); // true
 
-pointToString(midpointSegment(segment)); // (-1.5, 0)
+console.log(pointToString(midpointSegment(segment))); // (-1.5, 0)
