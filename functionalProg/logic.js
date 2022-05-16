@@ -66,6 +66,5 @@ console.log(If(False)('foo')('ba'));//'ba');
 console.log(True()());//undefined
 console.log(False()());//undefined
 
-_If_(_True_(_False_()))
 
 
