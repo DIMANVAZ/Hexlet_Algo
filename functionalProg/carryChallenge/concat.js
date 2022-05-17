@@ -9,6 +9,9 @@ function concat(a){
     }
 }
 
+//------решение Учителя-----------
+export default (str1) => (str2) => (str3) => `${str1}${str2}${str3}`;
+
 // исходная версия
 concat('a', 'bc', 'f'); // abcf
 
