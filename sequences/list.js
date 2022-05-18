@@ -18,6 +18,7 @@ export function has(list, value){
     }
     return has(tail(list),value)
 }
+
 export function reverse(list){
     if(isEmpty(list)){
         return list;
@@ -37,17 +38,20 @@ export function concat(list1, list2){
 
 }
 
-let emp = l(3,4,5,6);
-console.log(listToString(reverse(emp)));
+const numbers = l(1, 2, 3, 4);
+const numbers3 = l(5, 6, 7);
+console.log(listToString(concat(numbers, numbers3))); // (1, 2, 3, 4, 5, 6, 7)
 
-const numbers = l(3, 4, 5, 8);
-console.log(has(numbers, 8)); // true
-console.log(has(numbers, 0)); // false
+let emp = l(3,4,5,6);
+console.log(listToString(tail(emp)))
+console.log(listToString(reverse(emp)));
 
 const numbers2 = l(3, 4, 5);
 console.log(listToString(reverse(numbers2))); // (5, 4, 3)
 
-const numbers3 = l(3, 2, 9);
-console.log(listToString(concat(numbers, numbers3))); // (3, 4, 5, 8, 3, 2, 9)
+
+
+// console.log(has(numbers, 8)); // true
+// console.log(has(numbers, 0)); // false
 
 
