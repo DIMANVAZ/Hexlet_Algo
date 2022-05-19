@@ -16,17 +16,29 @@ append() — добавляет элемент (тег), созданный с �
 Новый элемент должен добавляться в начало ("голову") списка.
 */
 
+export function map2(handler, htmlList){ //принимаем функцию-обработчик и список
+    if(isEmpty(htmlList)){
+        return make(); // пустой лист - на нём и выедем из рекурсии. К нему и прилепим append-ом первую updNode;
+    }
+    const updNode = handler(head(htmlList)); //обновлённая нода после обработки функцией
+    return append(map(handler,tail(htmlList)),updNode); //прилепляем к создаваемому списку обновлённую ноду
+}
 
 export function map(handler, htmlList){
     if(isEmpty(htmlList)){
-        return l();
+        return make();
     }
-    let nextEl = head(htmlList);
-    let updEl = handler(nextEl);
-
-    return
+    const updNode = handler(head(htmlList));
+    return append(map(handler,tail(htmlList)),updNode);
 }
-export function mirror(){}
+
+
+export function mirror(htmlList){
+    function reverser(oldNode){
+        return node(getName(oldNode), getValue(oldNode).split("").reverse().join(""));
+    }
+    return map(reverser,htmlList);
+}
 
 is('h3', node('h3', 'hexlet')); // true
 is('h3', node('h6', 'hexlet')); // false
@@ -39,12 +51,12 @@ const dom3 = append(dom2, node('p', 'is a lisp'));
 // Отображение в результате которого в html-списке заменяются теги h1 на теги h2
 const processedDom = map((element) => {
     if (is('h1', element)) {
-        return node('h2', value(element));
+        return node('h2', getValue(element));
     }
     return element;
 }, dom3);
 
 
-htmlToString(mirror(dom3));
+console.log(htmlToString(mirror(dom3)));;
 // <h1>emehcs</h1>
 // <p>psil a si</p>
