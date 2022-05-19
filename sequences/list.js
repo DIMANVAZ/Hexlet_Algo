@@ -87,13 +87,13 @@ console.log(listToString(concat(numbers, numbers2)));//'(3, 4, 5, 8, 3, 2, 9)
 // let emp = l(3,4,5,6);
 // console.log(listToString(tail(emp)))
 // console.log(listToString(reverse(emp)));
-//
+
 // const numbers2 = l(3, 4, 5);
 // console.log(listToString(reverse(numbers2))); // (5, 4, 3)
 
-
-
 // console.log(has(numbers, 8)); // true
 // console.log(has(numbers, 0)); // false
+
+
 
 
