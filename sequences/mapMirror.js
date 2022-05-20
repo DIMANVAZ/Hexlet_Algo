@@ -16,22 +16,13 @@ append() — добавляет элемент (тег), созданный с �
 Новый элемент должен добавляться в начало ("голову") списка.
 */
 
-export function map2(handler, htmlList){ //принимаем функцию-обработчик и список
+export function map(handler, htmlList){ //принимаем функцию-обработчик и список
     if(isEmpty(htmlList)){
         return make(); // пустой лист - на нём и выедем из рекурсии. К нему и прилепим append-ом первую updNode;
     }
-    const updNode = handler(head(htmlList)); //обновлённая нода после обработки функцией
+    const updNode = handler(head(htmlList)); //обновлённая нода после обработки функцией (вынес отдельно для наглядности)
     return append(map(handler,tail(htmlList)),updNode); //прилепляем к создаваемому списку обновлённую ноду
 }
-
-export function map(handler, htmlList){
-    if(isEmpty(htmlList)){
-        return make();
-    }
-    const updNode = handler(head(htmlList));
-    return append(map(handler,tail(htmlList)),updNode);
-}
-
 
 export function mirror(htmlList){
     function reverser(oldNode){
@@ -57,6 +48,6 @@ const processedDom = map((element) => {
 }, dom3);
 
 
-console.log(htmlToString(mirror(dom3)));;
+console.log(htmlToString(mirror(dom3)));
 // <h1>emehcs</h1>
 // <p>psil a si</p>
