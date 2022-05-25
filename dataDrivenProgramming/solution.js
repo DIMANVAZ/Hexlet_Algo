@@ -1,18 +1,37 @@
 // @ts-check
 
-import { cons, car, cdr, toString as pairToString } from '@hexlet/pairs'; // eslint-disable-line
+import { cons, car, toString as pairToString } from '@hexlet/pairs'; // eslint-disable-line
 import { cons as consList, l, random, head, reverse, toString as listToString } from '@hexlet/pairs-data'; // eslint-disable-line
+import { typeTag } from '@hexlet/tagged-types';
+import { getName as getSimpleCardName, damage as simpleCardDamage } from './simpleCard.js';
+import { getName as getPercentCardName, damage as percentCardDamage } from './percentCard.js';
+
+const isSimpleCard = (card) => typeTag(card) === 'SimpleCard';
+const isPercentCard = (card) => typeTag(card) === 'PercentCard';
 
 const run = (player1, player2, cards, customRandom) => {
     const iter = (health1, name1, health2, name2, order, log) => {
         if (health1 <= 0) {
             return consList(cons(car(head(log)), `${name1} был убит`), log);
         }
-        // BEGIN (write your solution here)
         const card = customRandom(cards);
+
+        let cardName;
+        let damage;
+
+        // Populate cardName and damage using suitable card
+        // use imports from  percentCard.js and simpleCard.js
+        // BEGIN (write your solution here)
+        if(isSimpleCard(card)){
+            damage = simpleCardDamage(card);
+            cardName = getSimpleCardName(card);
+        }
+        if(isPercentCard(card)){
+            damage = percentCardDamage(card,health2);
+            cardName = getPercentCardName(card);
+        }
         // END
-        const cardName = car(card);
-        const damage = cdr(card)(health2);
+
         const newHealth = health2 - damage;
 
         const message = `Игрок '${name1}' применил '${cardName}'
@@ -32,6 +51,7 @@ const run = (player1, player2, cards, customRandom) => {
     return reverse(iter(startHealth, player1, startHealth, player2, 1, l(logItem)));
 };
 
-// BEGIN (write your solution here)
-export default (cards,optional = random) => (player1, player2) => run(player1, player2, cards, optional);
-// END
+export default (cards, customRandom = random) => {
+    const inner = (name1, name2) => run(name1, name2, cards, customRandom);
+    return inner;
+};
