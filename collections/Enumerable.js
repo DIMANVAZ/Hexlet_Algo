@@ -12,33 +12,27 @@ class Enumerable {
         this.collection = collection;
     }
 
-    // BEGIN (write your solution here)
     select(fn){
-        //return this.collection.map(fn);
-        const fin = [];
-        this.collection.forEach(el => fin.push(fn(el)));
-        return fin;
-        //
-        // this.collection = fin;
-        // return this
+        return new Enumerable(this.collection.map(fn));
     }
-    // END
 
-    // BEGIN (write your solution here)
     orderBy(valueFn, direction = 'asc'){
         function handler(a,b){
-            if(typeof(valueFn(a)) === 'string'){
-                return valueFn(a).localeCompare(valueFn(b));
-            }
-            return valueFn(a)-valueFn(b);
+            return valueFn(a) > valueFn(b) ? 1: -1;
         }
         if(direction === 'desc'){
-            return new Enumerable(this.collection.map(el =>el).sort(handler).reverse());
+            return new Enumerable(
+                this.collection
+                .map(el =>el) // для создания копии просто, вместо .slice() в уроке
+                .sort(handler)
+                .reverse());
         }
 
-        return new Enumerable(this.collection.filter(el => true).sort(handler));
+        return new Enumerable(
+            this.collection
+                .filter(el => true) // для создания копии просто, вместо .slice() в уроке
+                .sort(handler));
     }
-    // END
 
     where(fn) {
         this.collection = this.collection.filter(fn);
@@ -62,15 +56,15 @@ const cars = [
 
 const coll = new Enumerable(cars);
 
-// const result2 = coll.select(car => car.model);
-// console.log(result2.toArray());
+const result2 = coll.select(car => car.model);
+console.log(result2.toArray());
 
 //assert.deepEqual(result2.toArray(), ['m5', 'm4', 'sorento', 'rio', 'sportage']);
 
-// const result = coll.orderBy(car => car.year, 'desc')
-//     .where(car => car.brand === 'bmw')
-//     .select(car => car.model);
-// console.log(result.toArray());
+const result = coll.orderBy(car => car.year, 'desc')
+    .where(car => car.brand === 'bmw')
+    .select(car => car.model);
+console.log(result.toArray());
 
 //assert.deepEqual(result.toArray(), ['m5', 'm4']);
 
