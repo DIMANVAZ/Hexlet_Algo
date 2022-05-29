@@ -39,8 +39,12 @@ class Enumerable {
     }
 
     toArray() {
-        //return this.collection.slice();
-        return new Enumerable(this.collection.slice());
+        let collToOper = this.collection.slice();
+        for (let i = 0; i < this.operations.length; i++) {
+            collToOper = this.operations[i](collToOper);
+        }
+        return collToOper;
+
     }
 }
 

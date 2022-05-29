@@ -18,8 +18,16 @@ class Enumerable {
 
     orderBy(valueFn, direction = 'asc'){
         function handler(a,b){
-            return valueFn(a) > valueFn(b) ? 1: -1;
+            const ascDesc = direction === 'desc' ? -1 : 1;
+
+            if (valueFn(a) > valueFn(b)){
+                return ascDesc;
+            }
+            if (valueFn(a) < valueFn(b)){
+                return -ascDesc;
+            }
         }
+        
         if(direction === 'desc'){
             return new Enumerable(
                 this.collection
@@ -28,10 +36,7 @@ class Enumerable {
                 .reverse());
         }
 
-        return new Enumerable(
-            this.collection
-                .filter(el => true) // для создания копии просто, вместо .slice() в уроке
-                .sort(handler));
+        return new Enumerable(this.collection.slice().sort(handler));
     }
 
     where(fn) {
