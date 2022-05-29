@@ -71,3 +71,4 @@ const html8 = append(html7, node('blockquote', ''));
 const html9 = append(html8, node('blockquote', 'quote'));
 
 console.log(emptyTagsCount('blockquote', html9)); // 2
+
