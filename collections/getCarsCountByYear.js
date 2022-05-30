@@ -17,8 +17,14 @@ const { propertyName } = obj
 { ...acc, [propertyName]: value }   */
 
 export default function getCarsCountByYear(arrayOfObj){
-    return {year:'howMany'}
+    function adder(acc, elem){
+        const {year} = elem;
+        acc[year] ? acc[year] += 1 : acc[year] = 1;
+        return acc;
+    }
+    return arrayOfObj.reduce(adder, {})
 }
+
 
 const cars = [
     { brand: 'bmw', model: 'm5', year: 2014 },

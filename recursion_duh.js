@@ -41,3 +41,24 @@ function recursive_fucktorial(value= 4){
 }
 
 console.log(recursive_fucktorial()); // 24
+
+//--------факториал из курса-------
+const factorial = (n) => {
+    if (n === (0||1)) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+};
+
+
+console.log(factorial(3)); // 6
+console.log(factorial(5)); // 120
+
+//------возведение в степень : --------------
+function pow(num,n){
+    if(n === 1){
+        return num;
+    }
+    return num * pow(num, n-1);
+}
+console.log(pow(2,4)); //16
