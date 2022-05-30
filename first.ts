@@ -10,6 +10,16 @@ function sum(a: number, b: number): number{
     return a + b;
 }
 
+// нормальный вариант, где имя города можно самомУ писать:
+type DataNorm = {
+    name: string,
+    age: number,
+    city: {
+        cityName: string
+    }
+}
+const normCitizen: DataNorm = {name:'Ayrat', age:32, city:{cityName:'Kazan'}};
+
 //создали объект data, назначив ему "на ходу" тип в виде объекта определённой структуры
 //...с обязательным куском city: {cityName: 'London'}:
 const data: {name: string; age: number; city: {cityName: 'London'}} = {
@@ -58,7 +68,7 @@ const carsDoubt: (string | number | boolean)[] = [true, 'LandCruiser', 200, 'Toy
 type One = [string | number | boolean];
 const or1: One = ['Kazan'];
 const or2: One = [1/5];
-const or3 = [true];
+const or3: One = [true];
 
 // объявили константу team вполне конкретного размера и типа
 const team: [a:string, b:number, c:object] = ['stroka', 42, {y:'r'}];
