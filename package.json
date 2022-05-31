@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "directories": {
+    "test": "tests_course/take"
+  },
   "type": "module",
   "keywords": [],
   "author": "",
@@ -18,9 +21,11 @@
     "@hexlet/points": "^1.1.1",
     "@hexlet/tagged-types": "^1.1.1",
     "jest": "^28.0.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "power-assert": "^1.6.1"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.17.9"
+    "@babel/plugin-transform-modules-commonjs": "^7.17.9",
+    "intelli-espower-loader": "^1.1.0"
   }
 }
