@@ -20,6 +20,7 @@
     "@hexlet/pairs-data": "^1.1.1",
     "@hexlet/points": "^1.1.1",
     "@hexlet/tagged-types": "^1.1.1",
+    "async": "^3.2.4",
     "jest": "^28.0.2",
     "lodash": "^4.17.21",
     "power-assert": "^1.6.1"
