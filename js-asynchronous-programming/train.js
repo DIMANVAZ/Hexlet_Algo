@@ -3,6 +3,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import async from 'async';
 import __ from "lodash/fp/__.js";
+import * as readline from "readline";
 const __dirname = path.resolve();
 
 const getFileOwners = (dirpath, cb) => {
@@ -120,4 +121,21 @@ function getDirectorySize(dirpath, cb){
 getDirectorySize('H:\\Hexlet_Algo\\', (err, size) => {
     console.log(size);
 });
+
+/*Реализуйте и экспортируйте асинхронную функцию reverse(), которая
+изменяет порядок расположения строк в файле на обратный. Функция должна перезаписать файл.*/
+
+function reverse(filePath){
+    const { promises: fsp } = fs;
+    fsp.readFile(filePath, 'utf-8')
+        .then(data => {
+                fsp.writeFile(filePath, data
+                    .split('\n')
+                    .reverse()
+                    .join('\n')).then(() => console.log('Finished'));
+        });
+}
+
+reverse('H:\\Hexlet_Algo\\file.txt');
+
 
