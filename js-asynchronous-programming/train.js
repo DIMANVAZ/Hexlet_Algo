@@ -2,9 +2,6 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 import async from 'async';
-import __ from "lodash/fp/__.js";
-import * as readline from "readline";
-const __dirname = path.resolve();
 
 const getFileOwners = (dirpath, cb) => {
     fs.readdir(dirpath, (_error1, filenames) => {
@@ -124,9 +121,9 @@ getDirectorySize('H:\\Hexlet_Algo\\', (err, size) => {
 
 /*Реализуйте и экспортируйте асинхронную функцию reverse(), которая
 изменяет порядок расположения строк в файле на обратный. Функция должна перезаписать файл.*/
+const { promises: fsp } = fs;
 
 function reverse(filePath){
-    const { promises: fsp } = fs;
     fsp.readFile(filePath, 'utf-8')
         .then(data => {
                 fsp.writeFile(filePath, data
@@ -138,4 +135,14 @@ function reverse(filePath){
 
 reverse('H:\\Hexlet_Algo\\file.txt');
 
+// Реализуйте и экспортируйте асинхронную функцию touch(), которая создаёт файл, если его не существует.
+export function touch(path){
+    return fsp.access(path)
+        .then(()=>{})
+        .catch(e => fsp.writeFile(path,''))
+}
 
+touch('H:\\Hexlet_Algo\\haha.txt').then(()=> console.log('created'));
+
+
+// ['directory', 'file', null]
