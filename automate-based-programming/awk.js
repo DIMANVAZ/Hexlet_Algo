@@ -86,3 +86,4 @@ console.log(solution(text2));
 console.log(solution(text3));
 console.log(solution(text4));
 console.log(solution(text5));
+
