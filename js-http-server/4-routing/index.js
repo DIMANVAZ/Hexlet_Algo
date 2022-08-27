@@ -19,3 +19,11 @@ export default async function index(port, callback = () => {}){
     server.listen(port, callback.bind(null, server));
 };
 index(3333).then(()=> console.log('Index is working!'), ()=> console.log('error!'));
+
+var sum = 0;
+var steps = 0;
+for (let i = 10; i <=190 ; i+=10) {
+    sum = sum+i;
+    steps+=1;
+    console.log(sum,steps);
+}

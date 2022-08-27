@@ -31,4 +31,21 @@ findNumberByName(phoneBook, 'None'); // null
 console.log(findNumberByName(phoneBook, 'Alex Bowman'));
 console.log(findNumberByName(phoneBook, 'None'));
 
+// тренировка баловство для вспоминания
+// код подразумевает, что элемент в массиве точно есть!
+const arr = [0,1,2,3,4,5,6,7,8,9,10,11,12];
+const key = 12;
+function binSea(arr, key){
+    const pivot = Math.floor(arr.length/2);
+    if(arr[pivot] === key){
+        return arr[pivot];
+    } else{
+        if(key > arr[pivot]){
+            return binSea(arr.slice(pivot, arr.length),key);
+        } else{
+            return binSea(arr.slice(0,pivot),key)
+        }
+    }
+}
 
+console.log(binSea(arr,key));
