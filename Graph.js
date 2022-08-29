@@ -61,6 +61,7 @@ class Graph {
 
         // перебираем вершины из стека, пока он не опустеет
         while(stack.length) {
+                console.log(`Стек: `,stack);
             let activeVertex = stack.pop();
                 console.log(`Выпнули верхушку стека для обработки: ${activeVertex}`);
             handleVertex(activeVertex);
@@ -105,6 +106,7 @@ class Graph {
 
         // перебираем вершины из очереди, пока она не опустеет
         while(queue.length) {
+                console.log(`Очередь: `,queue);
             let activeVertex = queue.shift();
                 console.log(`Выпнули начало очереди для обработки: ${activeVertex}`);
             handleVertex(activeVertex);
@@ -122,10 +124,45 @@ class Graph {
         }
     }
 
+    // расстояния от узла до остальных + какие узлы будут предшествующими для каждого
+    bfs2(startVertex) {
+        let list = this.vertices;
+        let queue = [startVertex];
+        let visited = { [startVertex]: 1 };
+
+        // кратчайшее расстояние от стартовой вершины
+        let distance = { [startVertex]: 0 };
+        // предыдущая вершина в цепочке
+        let previous = { [startVertex]: null };
+
+        function handleVertex(vertex) {
+            let neighboursList = list[vertex];
+                console.log('Пляшем от вершины ',vertex);
+            neighboursList.forEach(neighbour => {
+                if (!visited[neighbour]) {
+                    visited[neighbour] = 1;
+                    queue.push(neighbour);
+                        console.log('Сосед: ', neighbour);
+                        console.log('Очередь: ', queue);
+                    // сохраняем предыдущую вершину
+                    previous[neighbour] = vertex;
+                    // сохраняем расстояние в глобальную переменную distance - кратчайшие расстояния от стартовой вершины
+                    distance[neighbour] = distance[vertex] + 1;
+                }
+            });
+        }
+
+        // перебираем вершины из очереди, пока она не опустеет
+        while(queue.length) {
+            let activeVertex = queue.shift();
+            handleVertex(activeVertex);
+        }
+
+        return { distance, previous }
+    }
 }
 
 const graph = new Graph();
-
 graph.addVertex('A');
 graph.addVertex('B');
 graph.addVertex('C');
@@ -149,3 +186,60 @@ graph.dfs('A',()=>{});
 console.log('--------');
 //graph.bfs('A', x => console.log(x)); // A B C F D E G H
 graph.bfs('A',()=>{}); // A B C F D E G H
+
+const digGraph = new Graph();
+digGraph.addVertex('1');
+digGraph.addVertex('2');
+digGraph.addVertex('3');
+digGraph.addVertex('4');
+digGraph.addVertex('5');
+digGraph.addVertex('6');
+digGraph.addVertex('7');
+digGraph.addVertex('8');
+digGraph.addVertex('9');
+digGraph.addVertex('10');
+digGraph.addVertex('11');
+digGraph.addVertex('12');
+digGraph.addVertex('13');
+
+digGraph.addEdge('1','2');
+digGraph.addEdge('1','3');
+digGraph.addEdge('1','4');
+digGraph.addEdge('1','5');
+digGraph.addEdge('1','6');
+
+digGraph.addEdge('5','7');
+
+digGraph.addEdge('7','8');
+digGraph.addEdge('7','9');
+digGraph.addEdge('7','10');
+digGraph.addEdge('7','11');
+
+digGraph.addEdge('11','12');
+digGraph.addEdge('11','13');
+console.log(digGraph)
+
+digGraph.bfs('1',()=>{});
+
+console.log('--------------------------------');
+const wayGraph = new Graph();
+wayGraph.addVertex('A');
+wayGraph.addVertex('B');
+wayGraph.addVertex('C');
+wayGraph.addVertex('D');
+wayGraph.addVertex('E');
+wayGraph.addVertex('F');
+wayGraph.addVertex('G');
+wayGraph.addVertex('H');
+
+wayGraph.addEdge('A', 'B');
+wayGraph.addEdge('B', 'F');
+wayGraph.addEdge('F', 'G');
+wayGraph.addEdge('A', 'C');
+wayGraph.addEdge('C', 'D');
+wayGraph.addEdge('D', 'F');
+wayGraph.addEdge('C', 'E');
+wayGraph.addEdge('E', 'F');
+
+const ways = wayGraph.bfs2('A');
+console.log(ways);
