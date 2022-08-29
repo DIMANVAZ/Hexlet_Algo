@@ -14,3 +14,5 @@ function sortByVowels(wordsArray){
 }
 
 console.log(sortByVowels(['ck','uuuAAAooo','dog', 'cat', 'house', 'flatmap', 'aaa', 'UUUUU']));
+
+
