@@ -99,7 +99,7 @@ class Graph {
                 if (!visited[neighbour]) {
                     visited[neighbour] = 1;
                     queue.push(neighbour);
-                    console.log(`Добавили соседа ${neighbour} в очередь. Теперь очередь: ${queue}`)
+                    console.log(`Добавили соседа`, neighbour, `в очередь. Теперь очередь: `,queue);
                 }
             });
         }
@@ -124,102 +124,111 @@ class Graph {
         }
     }
 
-    // расстояния от узла до остальных + какие узлы будут предшествующими для каждого
+    // кратчайшие расстояния от узла до остальных + какие узлы будут предшествующими для каждого
     bfs2(startVertex) {
         let list = this.vertices;
         let queue = [startVertex];
         let visited = { [startVertex]: 1 };
 
-        // кратчайшее расстояние от стартовой вершины
-        let distance = { [startVertex]: 0 };
         // предыдущая вершина в цепочке
         let previous = { [startVertex]: null };
+        // кратчайшее расстояние от стартовой вершины
+        let distance = { [startVertex]: 0 };
+
+        console.log(previous, distance);
 
         function handleVertex(vertex) {
+            console.log('Обрабатываем вершину', vertex);
+            // получаем список смежных вершин (соседей)
             let neighboursList = list[vertex];
-                console.log('Пляшем от вершины ',vertex);
+            console.log('Получили список соседей вершины: ', neighboursList);
+
+            // прогоняемся по всему списку соседей. Если сосед не посещался - отмечаем посещённым, ставим в очередь
             neighboursList.forEach(neighbour => {
                 if (!visited[neighbour]) {
                     visited[neighbour] = 1;
                     queue.push(neighbour);
-                        console.log('Сосед: ', neighbour);
-                        console.log('Очередь: ', queue);
-                    // сохраняем предыдущую вершину
+                    console.log(`Добавили соседа`, neighbour, `в очередь. С ним она: `,queue);
+                    // Доп.функции - их не было в простом bfs:
+                    // 1) сохраняем вершину vertex как предыдущую для соседа в глобальный список previous
                     previous[neighbour] = vertex;
-                    // сохраняем расстояние в глобальную переменную distance - кратчайшие расстояния от стартовой вершины
+                    console.log('Previous', previous);
+                    // 2) сохраняем расстояние в глобальный список distance - кратчайшие расстояния от стартовой вершины
                     distance[neighbour] = distance[vertex] + 1;
+                    console.log('distance', distance);
                 }
             });
         }
 
-        // перебираем вершины из очереди, пока она не опустеет
+        // забираем по одной вершины из очереди, пока она не опустеет
         while(queue.length) {
             let activeVertex = queue.shift();
+            console.log('Проход по очереди. Вынули её начало ',activeVertex,' для обработки. Очредь теперь:', queue);
             handleVertex(activeVertex);
         }
 
-        return { distance, previous }
+        return { previous, distance }
     }
 }
 
-const graph = new Graph();
-graph.addVertex('A');
-graph.addVertex('B');
-graph.addVertex('C');
-graph.addVertex('D');
-graph.addVertex('E');
-graph.addVertex('F');
-graph.addVertex('G');
-graph.addVertex('H');
-
-graph.addEdge('A', 'B');
-graph.addEdge('A', 'C');
-graph.addEdge('C', 'D');
-graph.addEdge('C', 'E');
-graph.addEdge('A', 'F');
-graph.addEdge('F', 'G');
-
-console.log(graph);
-console.log('--------');
-//graph.dfs('A', x => console.log(x)); // A B C D E F G H
-graph.dfs('A',()=>{});
-console.log('--------');
-//graph.bfs('A', x => console.log(x)); // A B C F D E G H
-graph.bfs('A',()=>{}); // A B C F D E G H
-
-const digGraph = new Graph();
-digGraph.addVertex('1');
-digGraph.addVertex('2');
-digGraph.addVertex('3');
-digGraph.addVertex('4');
-digGraph.addVertex('5');
-digGraph.addVertex('6');
-digGraph.addVertex('7');
-digGraph.addVertex('8');
-digGraph.addVertex('9');
-digGraph.addVertex('10');
-digGraph.addVertex('11');
-digGraph.addVertex('12');
-digGraph.addVertex('13');
-
-digGraph.addEdge('1','2');
-digGraph.addEdge('1','3');
-digGraph.addEdge('1','4');
-digGraph.addEdge('1','5');
-digGraph.addEdge('1','6');
-
-digGraph.addEdge('5','7');
-
-digGraph.addEdge('7','8');
-digGraph.addEdge('7','9');
-digGraph.addEdge('7','10');
-digGraph.addEdge('7','11');
-
-digGraph.addEdge('11','12');
-digGraph.addEdge('11','13');
-console.log(digGraph)
-
-digGraph.bfs('1',()=>{});
+// const graph = new Graph();
+// graph.addVertex('A');
+// graph.addVertex('B');
+// graph.addVertex('C');
+// graph.addVertex('D');
+// graph.addVertex('E');
+// graph.addVertex('F');
+// graph.addVertex('G');
+// graph.addVertex('H');
+//
+// graph.addEdge('A', 'B');
+// graph.addEdge('A', 'C');
+// graph.addEdge('C', 'D');
+// graph.addEdge('C', 'E');
+// graph.addEdge('A', 'F');
+// graph.addEdge('F', 'G');
+//
+// console.log(graph);
+// console.log('--------');
+// //graph.dfs('A', x => console.log(x)); // A B C D E F G H
+// graph.dfs('A',()=>{});
+// console.log('--------');
+// //graph.bfs('A', x => console.log(x)); // A B C F D E G H
+// graph.bfs('A',()=>{}); // A B C F D E G H
+//
+// const digGraph = new Graph();
+// digGraph.addVertex('1');
+// digGraph.addVertex('2');
+// digGraph.addVertex('3');
+// digGraph.addVertex('4');
+// digGraph.addVertex('5');
+// digGraph.addVertex('6');
+// digGraph.addVertex('7');
+// digGraph.addVertex('8');
+// digGraph.addVertex('9');
+// digGraph.addVertex('10');
+// digGraph.addVertex('11');
+// digGraph.addVertex('12');
+// digGraph.addVertex('13');
+//
+// digGraph.addEdge('1','2');
+// digGraph.addEdge('1','3');
+// digGraph.addEdge('1','4');
+// digGraph.addEdge('1','5');
+// digGraph.addEdge('1','6');
+//
+// digGraph.addEdge('5','7');
+//
+// digGraph.addEdge('7','8');
+// digGraph.addEdge('7','9');
+// digGraph.addEdge('7','10');
+// digGraph.addEdge('7','11');
+//
+// digGraph.addEdge('11','12');
+// digGraph.addEdge('11','13');
+// console.log(digGraph)
+//
+// digGraph.bfs('1',()=>{});
 
 console.log('--------------------------------');
 const wayGraph = new Graph();
