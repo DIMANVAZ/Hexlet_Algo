@@ -169,6 +169,25 @@ class Graph {
 
         return { previous, distance }
     }
+
+    findShortestWay(startVertex, endVertex){
+        const {previous, distance} = this.bfs2(startVertex, ()=>{});
+        if(!distance[endVertex]){
+            console.log('Нет связи между ',startVertex, 'и', endVertex);
+            return [null,null];
+        }
+
+        const wayArray = []; // путь
+        let currentVertex = endVertex; // пойдём с конца. Текущая вершина = конечная вершина
+        wayArray.unshift(currentVertex); // добавили в конец пути конечную точку, иначе пропустится.
+
+        while(currentVertex !== startVertex){ // пока текущая вершина не сравняется с начальной
+            wayArray.unshift(previous[currentVertex]); // идём по точкам и записываем пройденные
+            currentVertex = previous[currentVertex]; // переопределяем точку
+        }
+
+        return [wayArray, distance[endVertex]];
+    }
 }
 
 // const graph = new Graph();
@@ -249,6 +268,15 @@ wayGraph.addEdge('C', 'D');
 wayGraph.addEdge('D', 'F');
 wayGraph.addEdge('C', 'E');
 wayGraph.addEdge('E', 'F');
+console.log(wayGraph);
 
 const ways = wayGraph.bfs2('A');
 console.log(ways);
+
+const [path,steps] = wayGraph.findShortestWay('A',"G");
+const [path2,steps2] = wayGraph.findShortestWay('A',"D");
+const [path3,steps3] = wayGraph.findShortestWay('F',"C");
+console.log('------------------ \nПуть: ',path, ', шагов: ',steps);
+console.log('------------------ \nПуть: ',path2, ', шагов: ',steps2);
+console.log('------------------ \nПуть: ',path3, ', шагов: ',steps3);
+
