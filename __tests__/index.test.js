@@ -1,4 +1,4 @@
-import DoubleLinkedList from "../DoubleLinkedList.js";
+import DoubleLinkedList from "../dataStructures/DoubleLinkedList.js";
 
 const doll = new DoubleLinkedList();
 for (let i = 1; i <= 10; i++) {
