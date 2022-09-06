@@ -1,5 +1,5 @@
-/*
-Поиск кратчайшего пути в графе по алгоритму Дейкстры. Сами графы - ниже.
+/*  Поиск кратчайшего пути в графе по алгоритму Дейкстры. Сами графы - ниже.
+Граф у меня взвешенный, но НЕОРИЕНТИРОВАННЫЙ.
 Суть моего подхода:
  1. Представить граф в виде объекта graph = {A:{nearby:{'B':5,'C':3}}, B:{nearby:{'A':5,'C':4}}} и т.д.
  2. Выбираем стартовую точку (СТ). Ей ставим цену 0, остальным - бесконечность.
@@ -13,9 +13,7 @@
         переназначаем price = altPrice, а выгодного предка У записываем в {previous}
 5. Повторять, пока очередь не опустеет.
 6. Далее разматываем цепочку от КонечнойТочки (КТ), используя {previous}
-7. В качестве цены пути берём актуальную стоимость КТ.
-
-*/
+7. В качестве цены пути берём актуальную стоимость КТ.          */
 
 function dijkstra(graph, startNode, endNode, visited = {}, queue = [startNode], previous = {}){
     if(!graph[startNode] || !graph[endNode]){
@@ -92,8 +90,21 @@ const wGraphBig = {
     O:{nearby:{'N':5,'P':2,'I':7,'H':5}},
     P:{nearby:{'O':2,'I':4}}
 }
+const airports = {
+    'JFK':{nearby:{'LAX':25,'HKG':80}},
+    'LAX':{nearby:{'JFK':25,'MEX':15,'GRU':60}},
+    'MEX':{nearby:{'LAX':15,'GRU':46,'SYD':80}},
+    'HKG':{nearby:{'JFK':80,'GRU':110}},
+    'GRU':{nearby:{'LAX':25,'MEX':46,'CDG':60,'DME':730,'HKG':110}},
+    'CDG':{nearby:{'SYD':105,'GVA':5,'DME':15,'GRU':60}},
+    'SYD':{nearby:{'MEX':80,'GVA':100,'CDG':105}},
+    'DME':{nearby:{'GRU':730,'CDG':15,'GVA':5}},
+    'GVA':{nearby:{'DME':15,'CDG':5,'SYD':100}}
+}
 
 dijkstra(wGraphBig,'A','J');
 dijkstra(wGraphBig,'M','P');
 dijkstra(wGraphBig,'M','C');
 dijkstra(wGraphBig,'A','L');
+
+dijkstra(airports,'JFK','GVA');
