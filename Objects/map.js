@@ -25,27 +25,54 @@ export function make(){
 }
 
 export function set(map, key, value){
-    // const salt = key.toString().length;
-    // const keyHash = Math.abs(crc32.str(key+salt)) % 1000;
     const keyHash = Math.abs(crc32.str(key)) % 1000;
-    map[keyHash] = value;
-    return map;
+    // проверка на коллизию: коллизия - это когда хеш один, а ключи разные
+    if(map[keyHash]){
+        if(map[keyHash][0] !== key){
+            return false;
+        }
+    }
+    // конец проверки на коллизию
+    map[keyHash] = [key,value];
+    return true;
 }
 
 export function get(map, key, defaultValue = null){
-    // const salt = key.toString().length;
-    // const keyHash = Math.abs(crc32.str(key+salt)) % 1000;
     const keyHash = Math.abs(crc32.str(key)) % 1000;
-    return map[keyHash] || defaultValue;
+    // проверка на коллизию: коллизия - это когда хеш один, а ключи разные
+    if(map[keyHash]){
+        if(map[keyHash][0] !== key){
+            return defaultValue;
+        }
+        return map[keyHash][1]
+    }
+    // конец проверки на коллизию
+    return defaultValue;
 }
 
-const map = make();
-let result = get(map, 'key');
-console.log(result); // => null
+const map2 = make();
 
-result = get(map, 'key', 'default_value');
-console.log(result); // => "default_value"
+set(map2, 'aaaaa0.462031558722291', 'vvv'); //truthy;
+set(map2, 'aaaaa0.0585754039730588', 'boom!'); //falsy;
 
-set(map, 'key2', 'value2');
-result = get(map, 'key2');
-console.log(result); // => "value2"
+const result1 = get(map2, 'aaaaa0.462031558722291');
+console.log(result1); //.toBe('vvv');
+
+const result2 = get(map2, 'aaaaa0.0585754039730588');
+console.log(result2); //.toBeNull();
+
+set(map2, 'aaaaa0.462031558722291', 'wop');
+const result3 = get(map2, 'aaaaa0.462031558722291');
+console.log(result3);//.toBe('wop');
+
+
+// const map = make();
+// let result = get(map, 'key');
+// console.log(result); // => null
+//
+// result = get(map, 'key', 'default_value');
+// console.log(result); // => "default_value"
+//
+// set(map, 'key2', 'value2');
+// result = get(map, 'key2');
+// console.log(result); // => "value2"
