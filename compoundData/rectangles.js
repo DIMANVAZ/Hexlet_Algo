@@ -61,6 +61,7 @@ export function getWidth(rectangle){
 export function getHeight(rectangle){
     return cdr(cdr(rectangle));
 }
+
 export function square(rectangle){
     return getHeight(rectangle)*getWidth(rectangle);
 }
@@ -71,7 +72,7 @@ export function containsTheOrigin(rectangle){
     const startPoint = getStartPoint(rectangle);
     let oppositePoint = getOppositePoint(rectangle);
 
-    if(!getQuadrant(startPoint)){
+    if(!getQuadrant(startPoint) || !getQuadrant(oppositePoint)){
         return false;
     }
     //противоположная по диагонали точка должна располагаться в двух квадрантах от стартовой (модуль = 2):

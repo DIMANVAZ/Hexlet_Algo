@@ -10,19 +10,24 @@ const endPoint = makeDecartPoint(0, 0);
 const segment = makeSegment(beginPoint, endPoint);
 
 export function makeSegment(beginPoint, endPoint) {
-
+    return {beginPoint,endPoint};
 }
 
 export function getMidpointOfSegment(segment){
+    const x1 = getX(getBeginPoint(segment));
+    const y1 = getY(getBeginPoint(segment));
+    const x2 = getX(getEndPoint(segment));
+    const y2 = getY(getEndPoint(segment));
 
+    return makeDecartPoint((x1 + x2) / 2, (y1 + y2) / 2)
 }
 export function getBeginPoint(segment){
-
+    return segment.beginPoint;
 }
 export function getEndPoint(segment){
-
+    return segment.endPoint;
 }
 
-getMidpointOfSegment(segment); // (1.5, 1)
-getBeginPoint(segment); // (3, 2)
-getEndPoint(segment); // (0, 0)
+console.log(getMidpointOfSegment(segment)); // (1.5, 1)
+console.log(getBeginPoint(segment)); // (3, 2)
+console.log(getEndPoint(segment)); // (0, 0)
