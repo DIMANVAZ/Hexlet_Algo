@@ -8,6 +8,14 @@
 import Point from './Point.js';
 import Segment from './Segment.js';
 
+export default function reverse(segment){
+    const a = segment.getBeginPoint().getX();
+    const b = segment.getBeginPoint().getY();
+    const c = segment.getEndPoint().getX();
+    const d = segment.getEndPoint().getY();
+    return new Segment(new Point(c,d),new Point(a,b));
+}
+
 const beginPoint = new Point(1, 10);
 const endPoint = new Point(11, -3);
 
@@ -28,3 +36,4 @@ console.log(
     reversedSegment.endPoint.x,
     reversedSegment.endPoint.y,
 ); // => 11 -3 1 10
+
