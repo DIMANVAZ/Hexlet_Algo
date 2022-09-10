@@ -33,3 +33,6 @@ const fn2WithContext = bind(obj2, fn2);
 console.log(fn2WithContext(3, 1));  //  9
 console.log(fn2WithContext(0, -3)); //  10
 console.log(fn2WithContext.call({ number: 12 }, 5, 8)); //  4
+
+
+
