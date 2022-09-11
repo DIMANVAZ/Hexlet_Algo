@@ -76,3 +76,4 @@ money2.format(); // "€200.00"
 
 const money5 = new Money(10000);
 money5.format(); // "$10,000.00"
+
