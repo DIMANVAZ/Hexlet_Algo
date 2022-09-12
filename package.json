@@ -25,7 +25,8 @@
     "crc-32": "^1.2.2",
     "jest": "^28.0.2",
     "lodash": "^4.17.21",
-    "power-assert": "^1.6.1"
+    "power-assert": "^1.6.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.17.9",
