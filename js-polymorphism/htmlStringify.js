@@ -50,4 +50,16 @@ const emptyDivTag = {
 };
 const html3 = stringify(emptyDivTag); // <div id="empty"></div>
 
-console.log(html1,'\n',html2, '\n',html3)
+console.log(html1,'\n',html2, '\n',html3);
+
+
+
+
+console.log(filterAnagrams('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']));
+// ['carer', 'racer']
+
+console.log(filterAnagrams('laser', ['lazing', 'lazy',  'lacer']));
+// []
+console.log(anagramator('arf','aerhig'))
+console.log(anagramator('arf','afrtt'))
+console.log(anagramator('arfx','frax'))
