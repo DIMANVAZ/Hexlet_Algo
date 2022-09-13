@@ -11,9 +11,9 @@
 В реализации используйте Proxy.
 
 Чтобы избежать потери контекста для методов, используйте связывание через bind.
-Определить, что по ключу возвращается метод можно через оператор typeof.
-Можно пользоваться handler.set()    */
+Определить, что по ключу возвращается метод можно через оператор typeof */
 
+// класс-мишень (защищаемый)
 class Course {
     constructor(name) {
         this._name = name;
@@ -24,34 +24,44 @@ class Course {
     }
 }
 
-export default function protect(target){
+// вынес повторяющиеся проверки в отдельную функцию
+function checkProp(target,prop){
+    if(!(prop in target)){
+        throw new Error('нет такого свойства');
+    }
+    if(prop[0] === '_'){ // если поле\метод именуется с _
+        throw new Error('нельзя');
+    }
+}
+
+// функция-протектор - возвращает Прокси-обёртку над защищаемым объектом
+export default function protectProxy(target){
+    // объект инструментов:
     const handlers = {
         get(target,prop){
-            if(prop in target){
-                console.log('p in t');
-            } else throw new Error('нет такого свойства');
+            checkProp(target,prop);
+            if(typeof target[prop] === 'function'){
+                return target[prop].bind(target);
+            }
+            return target[prop];
         },
 
         set(target, prop, value){
-            console.log(prop[0])
-            if(!(prop in target)){
-                throw new Error('нет такого свойства');
-            }
-
-
+            checkProp(target,prop);
+            target[prop] = value;
+            return true;        // ибо set должен вернуть труэ, если свойство успешно записано
         }
     }
     return new Proxy(target, handlers);
 }
 
 const course = new Course('Object-oriented design');
-const protectedCourse = protect(course);
+const protectedCourse = protectProxy(course);
 
 console.log(course.getName()); // "Object-oriented design"
 console.log(protectedCourse.getName()); // "Object-oriented design"
 console.log(course._name); // "Object-oriented design"
 console.log(course._nonExists); // undefined
-console.log('----------------------------');
 console.log(protectedCourse._name); // Error
 console.log(protectedCourse._name = 'OOD'); // Error
 console.log(protectedCourse._nonExists); // Error
