@@ -35,3 +35,4 @@ const map2 = new InMemoryKV({ foo: 'bar', bar: 'zoo' });
 swapKeyValue(map2);
 
 console.log(map2.toObject()); //{ bar: 'foo', zoo: 'bar' }
+
