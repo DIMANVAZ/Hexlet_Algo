@@ -26,6 +26,8 @@
     "generate-password": "^1.7.0",
     "jest": "^28.0.2",
     "lodash": "^4.17.21",
+    "nock": "^13.2.9",
+    "node-fetch": "^3.2.10",
     "power-assert": "^1.6.1",
     "yup": "^0.32.11"
   },
