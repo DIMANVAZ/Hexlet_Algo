@@ -6,7 +6,6 @@ const axiosAdapter = (config) => { // конфиг типа { baseURL: 'http://l
     // BEGIN (write your solution here)
     async function processResult(promise){ // принимает промис, разрешает его ? преобразуя в новый формат, передаёт дальше
         return promise.then(axiosResp => {
-
             let ok = false;
             if (axiosResp.status >= 200 && axiosResp.status <= 226){
                 ok = true;
@@ -16,13 +15,17 @@ const axiosAdapter = (config) => { // конфиг типа { baseURL: 'http://l
                 ok: ok,
                 async json(){
                     return axiosResp.data;
-                },
-                async text(){
-                    return axiosResp.data.toString();
+                }
+            }
+        }, error => {
+            return {
+                status: error.response.status,
+                ok: false,
+                async text() {
+                    return error.response.data;
                 }
             }
         })
-
     }
     // END
 
@@ -30,8 +33,29 @@ const axiosAdapter = (config) => { // конфиг типа { baseURL: 'http://l
         get: (route, params) => processResult(instance.get(route, params)),
         delete: (route, params) => processResult(instance.delete(route, params)),
         // BEGIN (write your solution here)
-        post: (route, params) => processResult(instance.post(route, params)),
-        patch: (route, params) => processResult(instance.patch(route, params))
+
+        /* data =  { username: 'foo', password: 'bar' }
+        options= {
+          headers: { 'Content-Type': 'application/json' },
+          params: { returnUsers: true }
+        } */
+        post: (route, data, options) => {
+            if (Object.keys(options.params).length !== 0){
+                const [key,val] = Object.entries(options.params).flat(1);
+                route += `?${key}=${val}`;
+
+            }
+            return processResult(instance.post(route, data));
+        },
+
+        patch: (route, data, options) => {
+            if (Object.keys(options.params).length !== 0) {
+                const [key, val] = Object.entries(options.params).flat(1);
+                route += `?${key}=${val}`;
+
+            }
+            return processResult(instance.patch(route, data));
+        },
         // END
     };
 };
@@ -46,11 +70,3 @@ ok - результат выполнения запроса
 status - код HTTP-ответа
 json() - функция, возвращающая Promise. После его разрешения отдаётся JSON-ответ ресурса (body)
 text() - функция, возвращающая Promise. После его разрешения отдаётся текстовый ответ ресурса (body)*/
-
-
-
-// axios.get('https://jsonplaceholder.typicode.com/posts/1').then(res => console.log(
-//     res, '\n---------------------------------------^ this was axios^-----'));
-//
-// fetch('https://jsonplaceholder.typicode.com/posts/1').then(res => console.log(
-//     res, '\n----------------------------------------------^ this was fetch^----------'));
