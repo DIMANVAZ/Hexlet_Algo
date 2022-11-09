@@ -11,3 +11,10 @@ test('null error', () => {
         multiply(null,4)
     }).toThrow('Argument cannot be null')
 })
+
+// проверка объекта
+test('object', () => {
+    expect(multiply('obj',4)).toMatchObject({name:'ayrat'});
+    expect(multiply('obj',4)).toHaveProperty('name','ayrat');
+    expect(multiply('obj',4)).toHaveProperty('name');
+})

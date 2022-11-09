@@ -7,5 +7,11 @@
     "test": "jest --colors"
   },
   "author": "dimanvaz",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.2.2"
+  }
 }
