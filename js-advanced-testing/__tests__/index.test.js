@@ -13,8 +13,19 @@ test('null error', () => {
 })
 
 // проверка объекта
-test('object', () => {
+test('Проверяем объект', () => {
+    // полученный объект частично совпадает с ожидаемым
     expect(multiply('obj',4)).toMatchObject({name:'ayrat'});
+    // полученный объект имеет свойство name со значением ayrat
     expect(multiply('obj',4)).toHaveProperty('name','ayrat');
+    // полученный объект имеет свойство name
     expect(multiply('obj',4)).toHaveProperty('name');
+    // у полученного объекта есть определённые поля с определённым типом значения
+    expect(multiply('obj',4)).toEqual(expect.objectContaining({
+                    name: expect.any(String),
+                    surname: expect.any(String)}))
+})
+
+test('Не равно', () => {
+    expect(Math.random()).not.toEqual(Math.random());
 })
