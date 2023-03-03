@@ -27,7 +27,9 @@
     "lodash": "^4.17.21",
     "nock": "^13.2.9",
     "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.21",
     "power-assert": "^1.6.1",
+    "ts-node": "^10.9.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
