@@ -1,6 +1,5 @@
-const nums1 = [1,1,0,1,1,1];
-const nums2 = [1,0,1,0,0,1,1,1,0,1,1,0];
-
+// Определить наиболее длинную последовательность единиц в массиве из нулей и единиц.
+// Мой подход: последовательный проход
 function findMaxConsecutiveOnes(numsArray) {
     let lastMaxLength = 0;
 /*  0. Установить временный счётчик равным 0.
@@ -25,5 +24,7 @@ function findMaxConsecutiveOnes(numsArray) {
     return lastMaxLength;
 };
 
+const nums1 = [1,1,0,1,1,1];
+const nums2 = [1,0,1,0,0,1,1,1,0,1,1,0];
 console.log(findMaxConsecutiveOnes(nums1));
 console.log(findMaxConsecutiveOnes(nums2));
