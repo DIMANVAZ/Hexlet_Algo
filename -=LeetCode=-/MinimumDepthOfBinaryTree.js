@@ -26,5 +26,11 @@ Output: 5
 */
 
 var minDepth = function(root) {
+    function TreeNode(val, left, right) {
+        this.val = (val===undefined ? 0 : val)
+        this.left = (left===undefined ? null : left)
+        this.right = (right===undefined ? null : right)
+    }
 
+    
 };
