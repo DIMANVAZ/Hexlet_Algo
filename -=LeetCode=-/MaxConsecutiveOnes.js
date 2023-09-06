@@ -1,5 +1,5 @@
 // Определить наиболее длинную последовательность единиц в массиве из нулей и единиц.
-// Мой подход: последовательный проход
+// Мой подход: последовательный проход. GPT оценил как достаточно эффективный.
 function findMaxConsecutiveOnes(numsArray) {
     let lastMaxLength = 0;
 /*  0. Установить временный счётчик равным 0.
@@ -17,7 +17,6 @@ function findMaxConsecutiveOnes(numsArray) {
             tempCounter += 1;
             lastMaxLength = tempCounter > lastMaxLength ? tempCounter: lastMaxLength;
         } else {
-            //lastMaxLength = tempCounter > lastMaxLength ? tempCounter: lastMaxLength;
             tempCounter = 0;
         }
     }
